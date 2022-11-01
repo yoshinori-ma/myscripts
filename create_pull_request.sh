@@ -12,14 +12,14 @@
 
 # 以下の3つの配列は同index間で対応関係にあります
 # 向き先ブランチに対してラベルとprefixを定義しています
-branches=(production staging)
+branches=(production master)
 labels=(production staging)
 prefixes=(PRD STG)
 
 branch_name=$(git branch --contains | cut -d " " -f 2)
 issue_number=$(echo $branch_name | cut -d "/" -f 2)
 # issueのタイトルをプルリクエストのタイトルに使用します
-title=$(gh issue view 1 --json title | jq -r ".title")
+title=$(gh issue view ${issue_number} --json title | jq -r ".title")
 
 while true; do
   echo "${branch_name}からproduction, masterにプルリクエストを作成します\n"
